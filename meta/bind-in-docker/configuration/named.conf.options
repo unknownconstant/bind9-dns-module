@@ -1,0 +1,22 @@
+options {
+    directory "/var/cache/bind";
+    recursion yes;
+
+    dnssec-validation no;
+    listen-on { any; };
+    forwarders {
+            8.8.8.8;
+            4.4.4.4;
+    };
+    allow-update {key "ns1.internal."; };
+    allow-new-zones yes;
+};
+key "ns1.internal." {
+	algorithm hmac-sha256;
+	secret "<SECRET GOES HERE>";
+};
+
+controls {
+    inet 127.0.0.1 port 953
+    allow { 127.0.0.1; } keys { "ns1.internal."; };
+};

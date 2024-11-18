@@ -1,0 +1,17 @@
+version: "2.1"
+services:
+  bind9:
+    image: ubuntu/bind9:9.18-22.04_beta
+    container_name: bind9
+    environment:
+      - TZ=UTC
+      - BIND9_USER=bind
+    volumes:
+      - ./configuration/named.conf.options:/etc/bind/named.conf.options
+      - ./cache:/var/cache/bind
+      - ./zones:/var/lib/bind
+    ports:
+      - 53:53
+    restart: always
+    network_mode: host
+
